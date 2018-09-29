@@ -20,7 +20,6 @@ int main(){
 		cout<<a[i] <<" ";
 	}
 
-
 	return 0;
 }
 
