@@ -1,0 +1,4 @@
+- Knights Tour
+- Sudoku Solver (HackerBlocks)
+- N-KNights (HackerBLocks)
+- Crossword Puzzle(HackerRank-Optional)
