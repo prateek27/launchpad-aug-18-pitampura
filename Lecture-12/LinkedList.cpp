@@ -140,6 +140,20 @@ public:
 		return retval;
 	}
 
+	Node* midNode(Node *head) {
+		if(head == NULL or head->next == NULL) {
+			return head;
+		}
+
+		Node *slow = head;
+		Node *fast = head->next;
+		while(fast!= NULL and fast->next!=NULL) {
+			fast = fast->next->next;
+			slow = slow->next;
+		}	
+		return slow;
+	}
+
 	void buildList(Node *&head) {
 		int data;
 		cin>>data;
