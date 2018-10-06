@@ -115,7 +115,30 @@ public:
 		return;
 	}
 
-	
+
+	void reverseIterative(Node *&head) {
+		Node *prev = NULL;
+		Node *curr = head;
+		Node *N;
+		while(curr != NULL) {
+			N = curr->next;
+			curr->next = prev;
+			prev = curr;
+			curr = N;
+		}
+		head = prev;
+	}
+
+	Node* reverseRecursive(Node *head) {
+		if(head == NULL or head->next == NULL) {
+			return head;
+		}
+
+		Node *retval = reverseRecursive(head->next);
+		head->next->next = head;
+		head->next = NULL;
+		return retval;
+	}
 
 	void buildList(Node *&head) {
 		int data;
@@ -139,6 +162,8 @@ int main(int argc, char const *argv[])
 {
 	Node *head = NULL;
 	buildList(head);
+	print(head);
+	head = reverseRecursive(head);
 	print(head);
 	cout<<length(head);
 	return 0;
