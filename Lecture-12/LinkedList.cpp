@@ -180,6 +180,40 @@ public:
 		}
 	}
 
+	Node* merge(Node *a, Node *b) {
+		if(a == NULL){
+			return b;
+		}
+		if(b == NULL) {
+			return a;
+		}
+		Node *result = new Node(0);
+		Node *temp = result;
+		while(b != NULL and a != NULL) {
+			if(a->data <= b->data) {
+				insertAtTail(result, a->data);
+				a = a->next;
+				temp = temp->next;
+			} else if(a->data > b->data) {
+				insertAtTail(result, b->data);
+				b = b->next;
+				temp = temp->next;
+			}
+		}
+		while(a != NULL) {
+			insertAtTail(result, a->data);
+			a = a->next;
+			temp = temp->next;
+		}
+		while(b != NULL) {
+			insertAtTail(result, b->data);
+			b = b->next;
+			temp = temp->next;
+		}
+		deleteAtHead(result);
+		return result;
+	}
+
 	void print(Node *head) {
 		while(head != NULL) {
 			cout<<head->data<<"-->";
@@ -189,13 +223,21 @@ public:
 	}
 
 
+
+
 int main(int argc, char const *argv[])
 {
-	Node *head = NULL;
-	buildList(head);
-	print(head);
-	head = reverseRecursive(head);
-	print(head);
-	cout<<length(head);
+	Node *head1 = NULL;
+	buildList(head1);
+	print(head1);
+	// head = reverseRecursive(head);
+	// print(head);
+	// cout<<length(head);
+	Node *head2 = NULL;
+	buildList(head2);
+	print(head2);
+
+	Node *head3 = merge(head1, head2);
+	print(head3);
 	return 0;
 }
