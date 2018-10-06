@@ -40,7 +40,82 @@ public:
 		return;
 	}
 
+	void insertAtMiddle(Node *&head, int data, int pos) {
+		if(pos == 0 and head == NULL) {
+			insertATHead(head, data);
+			return;
+		}
+		if(pos >= length(head)) {
+			insertAtTail(head, data);
+			return;
+		}
+		int count = 0;
+		Node *temp = head;
+		while(count<=pos) {
+			temp=temp->next;
+			count++;
+		}
+		Node *new_node = new Node(data);
+		new_node->next = temp->next;
+		temp->next = new_node;
+		return;
+	}
 
+	void deleteAtHead(Node *&head) {
+		if(head == NULL) {
+			return;
+		}
+		Node *temp = head;
+		head = head->next;
+		delete temp;
+	}
+
+	void deleteAtTail2(Node *&head) {
+		Node *temp = head;
+		while(temp->next->next != NULL) {
+			temp = temp->next;
+		}
+		Node *to_be_removed = temp->next;
+		temp->next = NULL;
+		delete to_be_removed;
+		return;
+	}
+	void deleteAtTail(Node *&head) {
+		Node *temp = head;
+		Node *prev = NULL;
+		while(temp->next != NULL) {
+			prev = temp;
+			temp = temp->next;
+		}
+		delete temp;
+		prev->next = NULL;
+		return;
+	}
+
+	void deleteAtMiddle(Node *&head, int pos) {
+		if(head == NULL) {
+			return;
+		}
+		if(pos == 0) {
+			deleteAtHead(head);
+		}
+		if(pos > length(head)) {
+			deleteAtTail(head);
+		}
+		int jump = 1;
+		Node *temp = head;
+		Node *prev = NULL;
+		while(jump <= pos-1) {
+			prev = temp;
+			temp = temp->next;
+			jump += 1;
+		}
+		prev->next = temp->next;
+		delete temp;
+		return;
+	}
+
+	
 
 	void buildList(Node *&head) {
 		int data;
