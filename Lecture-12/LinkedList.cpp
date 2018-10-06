@@ -154,6 +154,23 @@ public:
 		return slow;
 	}
 
+	bool cycleDetect(Node *head) {
+		if(head == NULL or head->next == NULL) {
+			return head;
+		}
+
+		Node *slow = head;
+		Node *fast = head;
+		while(fast!= NULL and fast->next!=NULL) {
+			fast = fast->next->next;
+			slow = slow->next;
+			if(slow==fast) {
+				return true;
+			}
+		}	
+		return false;
+	}
+
 	void buildList(Node *&head) {
 		int data;
 		cin>>data;
