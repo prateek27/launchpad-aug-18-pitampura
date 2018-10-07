@@ -34,6 +34,6 @@ int parenthesis(string str) {
 
 int main(int argc, char const *argv[])
 {
-	cout<<parenthesis("(((X))(((Y))))");
+	cout<<parenthesis("(((X))))(");
 	return 0;
 }
