@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<cmath>
 using namespace std;
 //------------Node Class
 class node{
@@ -154,10 +155,72 @@ void printLevelOrder(node*root){
 
 }
 
+node* buildLevelOrder(){
+
+	node*root;
+	int d;
+	cin>>d;
+
+	root = new node(d);
+	queue<node*> q;
+
+	q.push(root);
+
+	while(!q.empty()){
+
+		node* f = q.front();
+		int c1,c2;
+		cin>>c1>>c2;
+
+		if(c1!=-1){
+			f->left  = new node(c1);
+			q.push(f->left);
+		}
+		if(c2!=-1){
+			f->right = new node(c2);
+			q.push(f->right);
+		}
+		q.pop();
+	}
+	return root;
+}
+
+
+void mirror(node* root){
+	if(root==NULL){
+		return;
+	}
+	swap(root->left,root->right);
+	mirror(root->left);
+	mirror(root->right);
+}
+
+pair<int,bool> isBalanced(node*root){
+	pair<int,bool> p,left,right;
+
+	if(root==NULL){
+		p.first = 0;
+		p.second = true;
+		return p;
+	}
+
+	//Rec Case
+	left = isBalanced(root->left);
+	right = isBalanced(root->right);
+
+	int h = max(left.first,right.first) + 1;
+
+	if(abs(left.first-right.first)<=1 and left.second and right.second){
+		return make_pair(h,true);
+	}
+	return make_pair(h,false);
+
+}
+
 
 
 int main(){
-	node*root = buildRec();
+	node*root = buildLevelOrder();//buildRec();
 	printPre(root);
 	cout<<endl;
 	cout<<count(root)<<endl;
