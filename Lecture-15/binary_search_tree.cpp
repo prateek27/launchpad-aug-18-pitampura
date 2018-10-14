@@ -105,8 +105,16 @@ node* deleteFromBST(node*root,int key){
 
 
 node* buildFromArray(int a[],int s,int e){
+	if(s>e){
+		return NULL;
+	}
 
+	int mid = (s+e)/2;
 
+	node*root = new node(a[mid]);
+	root->left = buildFromArray(a,s,mid-1);
+	root->right = buildFromArray(a,mid+1,e);
+	return root;
 }
 
 
@@ -181,11 +189,54 @@ void printLevelOrder(node*root){
 }
 
 
+class Pair{
+public:
+	node*head;
+	node*tail;
+};
+
+Pair flattenLL(node*root){
+	Pair p;
+	if(root==NULL){
+		p.head = p.tail = NULL;
+		return p;
+	}
+	if(root->left==NULL && root->right==NULL){
+		p.head = p.tail = root;
+		return p;
+	}
+	else if(root->left!=NULL && root->right==NULL){
+		Pair leftLL = flattenLL(root->left);
+		leftLL.tail->right = root;
+		p.head = leftLL.head;
+		p.tail  = root;
+		return p;
+	}
+
+	else if(root->right!=NULL && root->left==NULL){
+		Pair rightLL = flattenLL(root->right);
+		root->right = rightLL.head;
+		p.head = root;
+		p.tail = rightLL.tail;
+		return p;
+	}
+	else{
+		Pair leftLL = flattenLL(root->left);
+		Pair rightLL = flattenLL(root->right);
+		leftLL.tail->right = root;
+		root->right = rightLL.head;
+		p.head = leftLL.head;
+		p.tail = rightLL.tail;
+		return p;
+	}
+
+}
+
 
 int main(){
-	node*root = buildBST();
+	node*root = buildBST(); // buildFromArray(a,s,e);
 
-	cout<<"Enter Node to Delete";
+	/*cout<<"Enter Node to Delete";
 	int key;
 	cin>>key;
 
@@ -198,7 +249,15 @@ int main(){
 	cout<<endl;
 	printPost(root);
 	cout<<endl;
-	printLevelOrder(root);
+	printLevelOrder(root);*/
+
+	Pair linkedList = flattenLL(root);
+	node* temp = linkedList.head;
+	while(temp!=NULL){
+		cout<<temp->data<<"->";
+		temp = temp->right;
+	}
+	
 
 	return 0;
 }
