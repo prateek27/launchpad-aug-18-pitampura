@@ -91,21 +91,34 @@ public:
 			rehash();
 		}
 	}
-	____ search(int key){
-
-
-
-		return ____;
+	T* search(string key){
+		//Return a Pointer to the value, NULL otherwise
+		int index = hashFn(key);
+		Node<T>*temp = table[index];
+		while(temp!=NULL){
+			if(temp->key==key){
+				return &(temp->value);
+			}
+			temp = temp->next;
+		}
+		return NULL;
 	}
 	void erase(int key){
-
-		
-
+		//Delete from linked list
 
 		return;
 	}
 
+	T& operator[](string key){
+		T* found = search(key);
+		if(found==NULL){
+			T garbage;
+			insert(key,garbage);
+		}
+		found = search(key);
+		return (*found);
 
+	}
 
 	void print(){
 
@@ -134,6 +147,14 @@ int main(){
 	h.insert("GreenApple",150);
 
 	h.print();
+
+	int*price  = h.search("Kiwi");
+	cout<<*price;
+
+	h["Guava"] += 30; //Update
+	h["Strawberry"]  = 111; // Insert
+	cout<<h["Guava"]<<endl; // Search
+	cout<<h["Strawberry"]<<endl;
 
 	return 0;
 }
