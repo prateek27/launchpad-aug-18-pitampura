@@ -7,10 +7,12 @@ public:
 	char data;
 	unordered_map<char,Node*> children;
 	bool terminal;
+	char *name;
 
 	Node(char d){
 		data = d;
 		terminal = false;
+		name = NULL;
 	}
 };
 
