@@ -34,51 +34,18 @@ public:
 			cout<<endl;
 		}
 	}
-	int dfsHelper(int s,bool *visited){
-		visited[s] = true;
-
-		int cnt = 1;
-		auto neigbours = l[s];
-		for(auto n:neigbours){
-			if(!visited[n]){
-				cnt += dfsHelper(n,visited);
-			}
-		}
-		return cnt;
-
-	}
-
-	int dfs(){
-		bool *visited = new bool[V]{0};
-		int ans = V*(V-1)/2;
-
-		for(int i=0;i<V;i++){
-			if(!visited[i]){
-				int s = dfsHelper(i,visited);
-				cout<<s<<endl;
-
-				ans -= (s)*(s-1)/2;
-
-			}
-		}
-		return ans;
-	}
 };
 
 
 int main(){
 
 	Graph g(5);
-	/*5 3
-0 1
-2 3
-0 4*/
 	g.addEdge(0,1);
+	g.addEdge(0,2);
+	g.addEdge(1,2);
 	g.addEdge(2,3);
-	g.addEdge(0,4);
-	//g.print();
-	cout<<g.dfs()<<endl;
 
+	g.print();
 
 	return 0;
 }
