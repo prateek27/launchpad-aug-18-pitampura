@@ -51,19 +51,51 @@ public:
 		}
 
 	}
+
+	void topologicalSort(){
+		int *indegree  = new int[V]{0};
+
+		//Init All Indegrees
+		for(int i=0;i<V;i++){
+			for(int child:l[i]){
+				indegree[child]++;
+			}
+		}
+
+		//Find all nodes with 0 indegrees
+		queue<int> q;
+		for(int i=0;i<V;i++){
+			if(indegree[i]==0)
+				q.push(i);
+		}
+
+		//Start removing elements from the queue
+		while(!q.empty()){
+			int node = q.front();
+			cout<<node<<" ";
+			q.pop();
+
+			for(int child:l[node]){
+				indegree[child]--;
+				if(indegree[child]==0){
+					q.push(child);
+				}
+			}
+		}
+	}
 };
 
 int main(){
 
-	Graph g(6);
-	g.addEdge(0,1);
-	g.addEdge(0,2);
-	g.addEdge(3,1);
-	g.addEdge(2,4);
-	g.addEdge(4,3);
-	g.addEdge(3,5);
+	Graph g(7);
+	g.addEdge(0,2,false);
+	g.addEdge(1,6,false);
+	g.addEdge(2,6,false);
+	g.addEdge(2,3,false);
+	g.addEdge(3,5,false);
+	g.addEdge(6,5,false);
 
-	g.bfs(0);
+	g.topologicalSort(); //DAG 
 
 	return 0;
 }

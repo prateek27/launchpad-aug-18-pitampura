@@ -27,11 +27,14 @@ public:
 
 
 		int *dist = new int[V];
+		int *parent = new int[V];
 		//Init all nodes with inf dist
 		for(int i=0;i<V;i++){
 			dist[i] = INT_MAX;
+			parent[i] = -1;
 		}
 		dist[s] = 0;
+		parent[s] = s;
 
 		while(!q.empty()){
 			int node  = q.front();
@@ -41,6 +44,7 @@ public:
 				if(dist[child]==INT_MAX){
 					q.push(child);
 					dist[child] = dist[node] + 1;
+					parent[child] = node;
 				}	
 			}
 		}
@@ -48,7 +52,17 @@ public:
 		//Print the dist of all nodes
 		for(int i=0;i<V;i++){
 			cout<<"dist["<<i<<"]"<<"="<<dist[i]<<endl;
+			cout<<"parent["<<i<<"]"<<"="<<parent[i]<<endl;
 		}
+
+		int dest=36;
+		int src = 0;
+		while(dest!=src){
+			cout<<dest<<"<---";
+			dest = parent[dest];
+		}
+		cout<<src;
+
 
 	}
 };
